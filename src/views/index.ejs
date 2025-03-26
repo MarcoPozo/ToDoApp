@@ -4,22 +4,9 @@
     <h2 class="text-2xl font-semibold mb-4">Mis Tareas</h2>
 
     <div class="mb-6">
-      <form
-        action="/add-task"
-        method="POST"
-        class="flex flex-col sm:flex-row gap-4"
-      >
-        <input
-          type="text"
-          name="task"
-          placeholder="Escribe una nueva tarea..."
-          class="flex-1 px-4 py-2 rounded-md bg-white text-black"
-          required
-        />
-        <button
-          type="submit"
-          class="bg-[#38BDF8] hover:bg-[#67E8F9] px-4 py-2 rounded-md font-semibold transition text-black"
-        >
+      <form action="/add-task" method="POST" class="flex flex-col sm:flex-row gap-4">
+        <input type="text" name="task" placeholder="Escribe una nueva tarea..." class="flex-1 px-4 py-2 rounded-md bg-white text-black" required />
+        <button type="submit" class="bg-[#38BDF8] hover:bg-[#67E8F9] px-4 py-2 rounded-md font-semibold transition text-black">
           Añadir tarea
         </button>
       </form>
@@ -55,29 +42,23 @@
             </td>
             <td class="p-3 text-center space-x-2">
               <!-- Toggle -->
-              <form
-                action="/toggle/<%= task.id %>"
-                method="POST"
-                class="inline"
-              >
-                <button
-                  type="submit"
-                  class="bg-[#38BDF8] hover:bg-[#67E8F9] px-2 py-1 rounded transition"
-                >
-                  <i class="fa-solid fa-pen-to-square"></i>
+              <form action="/toggle/<%= task.id %>" method="POST" class="inline">
+                <input type="hidden" name="current" value="<%= task.completed %>" />
+
+                <% if(!task.completed){ %>
+                <button type="submit" class="bg-lime-500 hover:bg-lime-900 px-2 py-1 rounded transition" title="Completado">
+                  <i class="fa-solid fa-check"></i>
                 </button>
+                <% } else { %>
+                <button type="submit" class="bg-amber-300 hover:bg-amber-500 px-2 py-1 rounded transition" title="Pendiente">
+                  <i class="fa-regular fa-hourglass-half"></i>
+                </button>
+                <% } %>
               </form>
 
               <!-- Delete -->
-              <form
-                action="/delete/<%= task.id %>"
-                method="POST"
-                class="inline"
-              >
-                <button
-                  type="submit"
-                  class="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded transition"
-                >
+              <form action="/delete/<%= task.id %>" method="POST" class="inline">
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded transition">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </form>
