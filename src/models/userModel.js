@@ -6,7 +6,7 @@ export const getAllTaks = async () => {
 };
 
 export const createTaks = async (content) => {
-  await db.execute("INSERT INTO tasks (content, complete) VALUES (?, ?", [
+  await db.execute("INSERT INTO tasks (content, completed) VALUES (?, ?)", [
     content,
     false,
   ]);
