@@ -1,19 +1,19 @@
 import { db } from "../config/db.js";
 
 export const getAllTaks = async () => {
-  const [rows] = await db.execute("SELECT * FROM task");
+  const [rows] = await db.execute("SELECT * FROM tasks");
   return rows;
 };
 
 export const createTaks = async (content) => {
-  await db.execute("INSERT INTO task (content, complete) VALUES (?, ?", [
+  await db.execute("INSERT INTO tasks (content, complete) VALUES (?, ?", [
     content,
     false,
   ]);
 };
 
 export const deleteTask = async (id) => {
-  await db.execute("DELETE FROM task WHERE id = ?", [id]);
+  await db.execute("DELETE FROM tasks WHERE id = ?", [id]);
 };
 
 export const toggleTaks = async (id, completed) => {

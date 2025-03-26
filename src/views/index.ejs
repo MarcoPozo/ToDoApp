@@ -1,0 +1,92 @@
+<%- include("./partials/header.ejs") %>
+<main class="flex-grow container mx-auto px-4 py-8">
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-4">Mis Tareas</h2>
+    
+    <div class="mb-6">
+      <form
+        action="/add-task"
+        method="POST"
+        class="flex flex-col sm:flex-row gap-4"
+      >
+        <input
+          type="text"
+          name="task"
+          placeholder="Escribe una nueva tarea..."
+          required
+          class="flex-1 px-4 py-2 rounded-md bg-white text-black"
+        />
+        <button
+          type="submit"
+          class="bg-[#38BDF8] hover:bg-[#67E8F9] px-4 py-2 rounded-md font-semibold transition text-black"
+        >
+          Añadir tarea
+        </button>
+      </form>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto bg-[#1F2937] text-sm rounded-md">
+        <thead class="text-center bg-[#111827] text-white">
+          <tr>
+            <th class="p-3">#</th>
+            <th class="p-3">Contenido</th>
+            <th class="p-3">Estado</th>
+            <th class="p-3 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% if (tasks.length === 0) { %>
+          <tr>
+            <td colspan="4" class="text-center py-4 text-[#9AA3B8]">
+              No hay tareas disponibles 🚫
+            </td>
+          </tr>
+          <% } else { %> <% tasks.forEach((task, index) => { %>
+          <tr class="border-t border-gray-700">
+            <td class="p-3"><%= index + 1 %></td>
+            <td class="p-3"><%= task.content %></td>
+            <td class="p-3">
+              <% if (task.completed) { %>
+              <span class="text-green-400 font-semibold">Completada ✅</span>
+              <% } else { %>
+              <span class="text-yellow-400 font-semibold">Pendiente ⏳</span>
+              <% } %>
+            </td>
+            <td class="p-3 text-center space-x-2">
+              <!-- Toggle -->
+              <form
+                action="/toggle/<%= task.id %>"
+                method="POST"
+                class="inline"
+              >
+                <button
+                  type="submit"
+                  class="bg-[#38BDF8] hover:bg-[#67E8F9] px-2 py-1 rounded transition"
+                >
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              </form>
+
+              <!-- Delete -->
+              <form
+                action="/delete/<%= task.id %>"
+                method="POST"
+                class="inline"
+              >
+                <button
+                  type="submit"
+                  class="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded transition"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %> <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<%- include("./partials/footer.ejs") %>
